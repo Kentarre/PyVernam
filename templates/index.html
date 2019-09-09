@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container" style="padding: 200 200">
+        <form id="start" data-url="{{url_for('start')}}">
+            <div class="form-group">
+                <select name="type" class="form-control">
+                    <option value="Encode">Encode</option>
+                    <option value="Decode">Decode</option>
+                </select>
+            </div>
+            <div class=form-group>
+                <textarea class="form-control" rows="7" name="message" id="message" placeholder="Message" required/></textarea>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="passphrase" placeholder="Password" name="passphrase" required>
+            </div>
+            <div class=form-group>
+                <label id="message-type"></label>
+                <textarea class="form-control" rows="7" name="message" id="message-result"
+                    placeholder="Result" readonly/></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form>
+    </div>
+</body>
+<script>
+    $('#start').on('submit', function (e) {
+        e.preventDefault();
+
+        var url = $(this).data('url');
+        var data = $(this).serialize();
+
+        $.post(url, data, function (response) {
+            $('#message').val("");
+            $('#passphrase').val("");
+
+            var r = JSON.parse(response);
+            $('#message-type').text(r.type + ':')
+            $('#message-result').text(r.msg)
+        }).fail(function(response){
+            alert(response.statusText);
+        });
+    })
+</script>
+
+</html>
