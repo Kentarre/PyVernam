@@ -29,7 +29,7 @@ def get_merged_string(chunks, cph, op):
 
     for c in chunks:
         for i in range(0, len(c)):
-            bytes_list.append(c[i] + cph[i] if op == Operation.ENCODE else c[i] - cph[i])
+            bytes_list.append(c[i] ^ cph[i])
 
     arr = bytearray(bytes_list)
     return base64.b64encode(arr).decode('UTF-8') if op == Operation.ENCODE else arr.decode('UTF-8') 
