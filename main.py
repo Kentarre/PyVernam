@@ -1,4 +1,5 @@
 import json
+import datetime
 from vernam import get_result
 from operation_type import Operation
 from flask import Flask, render_template, request
@@ -8,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', year=datetime.datetime.now().year)
 
 @app.route('/start', methods=['POST'])
 def start():
