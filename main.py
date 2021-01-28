@@ -22,5 +22,14 @@ def start():
         "msg": result.msg
     })
 
+@app.route('/hello', methods=['GET'])
+def me():
+    bd = datetime.datetime.strptime('11/04/1989 00:00:00', '%d/%m/%Y %H:%M:%S')
+    now = datetime.datetime.now()
+    total = now - bd
+    days = total.days
+    
+    return render_template('me.html', year=datetime.datetime.now().year, age=days//365)
+
 if __name__=="__main__":
     app.run()
