@@ -25,18 +25,17 @@
                 </select>
             </div>
             <div class="form-group">
-                <textarea class="form-control custom-panel-element" rows="7" name="message" id="message"
-                    placeholder="Message" required /></textarea>
-            </div>
-            <div class="form-group">
                 <input type="password" class="form-control custom-panel-element" id="passphrase"
                     placeholder="Passphrase" name="passphrase" required>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control custom-panel-element" rows="7" name="message" id="message"
+                    placeholder="Message" required /></textarea>
             </div>
             <div class="form-group">
                 <textarea class="form-control custom-panel-element" rows="7" name="message" id="message-result"
                     placeholder="Result" readonly /></textarea>
             </div>
-            <button type="submit" class="btn btn-primary mb-2 custom-panel-element">Submit</button>
         </form>
     </div>
 
@@ -50,23 +49,33 @@
         console.log('callback - particles.js config loaded');
     });
 
-    $('#start').on('submit', function (e) {
-        e.preventDefault();
+    function doRequest(e){
+        var message = $('#message').val();
+        var passphrase = $('#passphrase').val();
 
-        var url = $(this).data('url');
-        var data = $(this).serialize();
+        if (message === "" || passphrase === ""){
+           return; 
+        }
+        
+        var url = e.closest("form").data('url');
+        var data = e.closest("form").serialize();
 
         $.post(url, data, function (response) {
-            $('#message').val("");
-            $('#passphrase').val("");
-
             var r = JSON.parse(response);
             $('#message-type').text(r.type + ':')
             $('#message-result').text(r.msg)
         }).fail(function (response) {
             alert(response.statusText);
         });
-    })
+    }
+
+    $('#message').keyup(function(){
+       doRequest($(this));
+    });
+
+    $('#passphrase').keyup(function(){
+        doRequest($(this));
+    });
 </script>
 
 </html>
