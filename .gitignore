@@ -25,6 +25,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+hash
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -130,6 +131,7 @@ dmypy.json
 
 # vscode
 .vscode
+.DS_Store
 
 # Pyre type checker
 .pyre/
@@ -139,3 +141,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+#Directories
+uploads/
